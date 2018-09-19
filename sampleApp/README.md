@@ -4,6 +4,14 @@ To install angular animation package :
 ```
 > npm install @angular/animations@latest --save
 ```
+
+---
+
+import { trigger,state,style,transition,animate,keyframes } from '@angular/animations';
+
+---
+
+
 ```javascript
 animations: [
     trigger('myAwesomeAnimation', [
