@@ -1,27 +1,60 @@
 # SampleApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.1.
+To install angular animation package :
+```
+> npm install @angular/animations@latest --save
+```
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+import { trigger,state,style,transition,animate,keyframes } from '@angular/animations';
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+```javascript
+animations: [
+    trigger('myAwesomeAnimation', [
+        state('small', style({
+            transform: 'scale(1)',
+        })),
+        state('large', style({
+            transform: 'scale(1.2)',
+        })),
+        transition('small => large', animate('100ms ease-in')),
+    ]),
+  ]
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```javascript
+<p [@myAwesomeAnimation]='state' (click)="animateMe()">I will animate</p>
+```
 
-## Running unit tests
+```javascript
+export class AppComponent {
+  state: string = 'small';
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  animateMe() {
+        this.state = (this.state === 'small' ? 'large' : 'small');
+  }
 
-## Running end-to-end tests
+}
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Adding Style During Transitions
 
-## Further help
+```javascript
+        transition('small <=> large', animate('300ms ease-in', style({
+          transform: 'translateY(40px)'
+        }))),
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Adding Keyframe Animations
+
+```javascript
+        transition('small <=> large', animate('300ms ease-in', keyframes([
+          style({opacity: 0, transform: 'translateY(-75%)', offset: 0}),
+          style({opacity: 1, transform: 'translateY(35px)',  offset: 0.5}),
+          style({opacity: 1, transform: 'translateY(0)',     offset: 1.0})
+        ]))),
+```
